@@ -380,13 +380,23 @@ export default function AISmartphoneCompare() {
     });
   }
 
+  // Make endpoint configurable via environment variable, fallback to default
+  const AI_SUMMARY_ENDPOINT = (typeof process !== "undefined" && process.env && process.env.REACT_APP_AI_SUMMARY_ENDPOINT)
+    ? process.env.REACT_APP_AI_SUMMARY_ENDPOINT
+    : '/api/ai/summary';
+
   async function runAISummary() {
     if (!metricsA || !metricsB) return;
+    if (!AI_SUMMARY_ENDPOINT) {
+      setSummary({ verdict: 'AI summary endpoint is not configured.', winsA: [], winsB: [], ties: [] });
+      return;
+    }
     const prompt = `You are a neutral smartphone reviewer. Compare two phones and return a crisp paragraph and 3 bullets of strengths for each.\nA: ${metricsA.name}. Specs: size ${metricsA.sizeIn} in, ${metricsA.hz} Hz, RAM ${metricsA.ram} GB, storage ${metricsA.storage} GB, battery ${metricsA.mAh} mAh, chipset ${metricsA.chipset}.\nB: ${metricsB.name}. Specs: size ${metricsB.sizeIn} in, ${metricsB.hz} Hz, RAM ${metricsB.ram} GB, storage ${metricsB.storage} GB, battery ${metricsB.mAh} mAh, chipset ${metricsB.chipset}.`;
     setLoading(true);
     try {
       const provider = 'openrouter';
-  const resp = await fetch(`/api/ai/summary?provider=${encodeURIComponent(provider)}`, {
+      const url = `${AI_SUMMARY_ENDPOINT}?provider=${encodeURIComponent(provider)}`;
+      const resp = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt }),
