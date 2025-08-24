@@ -104,9 +104,25 @@ function shapeSections(spec) {
     { label: 'OS Version at Launch', value: g('Platform')('OS') },
     { label: 'UI', value: g('Platform')('UI') },
   ];
+  // Helper function to extract IP rating from flat spec object
+  function extractIPRating(flat) {
+    const build = flat['Body::Build'];
+    const sim = flat['Body::SIM'];
+    const ratings = [];
+    if (build) {
+      const matches = build.match(/IP\d{2}/g);
+      if (matches) ratings.push(...matches);
+    }
+    if (sim) {
+      const matches = sim.match(/IP\d{2}/g);
+      if (matches) ratings.push(...matches);
+    }
+    return ratings.length > 0 ? ratings.join(', ') : undefined;
+  }
+
   const security = [
     { label: 'Biometrics', value: g('Features')('Sensors') },
-    { label: 'IP Rating', value: g('Body')('Build')?.match(/IP\d{2}/g)?.join(', ') || g('Body')('SIM')?.match(/IP\d{2}/g)?.join(', ') || undefined },
+    { label: 'IP Rating', value: extractIPRating(flat) },
   ];
   const camera = [
     { label: 'Main Camera', value: g('Main Camera')('Triple') || g('Main Camera')('Dual') || g('Main Camera')('Single') },
