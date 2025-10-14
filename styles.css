@@ -1,0 +1,332 @@
+/* Mobile Comparison Site - Styles */
+
+:root {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --border-color: #334155;
+    --text-primary: #e5e7eb;
+    --text-secondary: #9ca3af;
+    --accent-color: #3b82f6;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.comparison-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+@media (max-width: 968px) {
+    .comparison-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.phone-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.phone-section h2 {
+    margin-bottom: 20px;
+    color: var(--accent-color);
+}
+
+.search-box {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg-dark);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-dark);
+    border: 2px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.suggestions.show {
+    display: block;
+}
+
+.suggestion-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.2s;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background: var(--bg-card);
+}
+
+.phone-details {
+    margin-top: 20px;
+}
+
+.spec-section {
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.spec-section h3 {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.spec-item {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.spec-item:last-child {
+    border-bottom: none;
+}
+
+.spec-label {
+    width: 140px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.spec-value {
+    flex: 1;
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.comparison-results {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 30px;
+}
+
+.comparison-results h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.comparison-table {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th {
+    background: var(--bg-dark);
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--border-color);
+    font-weight: 600;
+}
+
+table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+.winner {
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+.loser {
+    color: var(--text-secondary);
+}
+
+.tie {
+    color: var(--warning-color);
+}
+
+.verdict {
+    margin-top: 24px;
+    padding: 20px;
+    background: var(--bg-dark);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 8px;
+}
+
+.verdict h3 {
+    margin-bottom: 12px;
+    color: var(--accent-color);
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.spinner {
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--accent-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+    padding: 16px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 20px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .spec-label {
+        width: 100px;
+    }
+    
+    table {
+        font-size: 14px;
+    }
+    
+    table th,
+    table td {
+        padding: 8px;
+    }
+}
+
+/* Accessibility */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+    background: var(--accent-color);
+    color: white;
+}
