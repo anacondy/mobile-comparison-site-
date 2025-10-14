@@ -3,12 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My App</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://en.wikipedia.org;">
+    <meta name="description" content="Compare smartphones side by side with detailed specifications">
+    <title>Mobile Comparison Site - Compare Smartphones</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Hello, GitHub Pages!</h1>
-    
-    <!-- Link to your script -->
-    <script src="script.js"></script>
+    <div id="app">
+        <header>
+            <h1>📱 Mobile Comparison Site</h1>
+            <p>Compare smartphones side by side with real-time data from Wikipedia</p>
+        </header>
+
+        <main>
+            <div class="comparison-container">
+                <!-- Phone A Section -->
+                <div class="phone-section">
+                    <h2>Phone A</h2>
+                    <div class="search-box">
+                        <input type="text" id="searchA" placeholder="Search for a phone (e.g., iPhone 15 Pro)" autocomplete="off">
+                        <div id="suggestionsA" class="suggestions"></div>
+                    </div>
+                    <div id="phoneA-details" class="phone-details"></div>
+                </div>
+
+                <!-- Phone B Section -->
+                <div class="phone-section">
+                    <h2>Phone B</h2>
+                    <div class="search-box">
+                        <input type="text" id="searchB" placeholder="Search for a phone (e.g., Samsung Galaxy S24)" autocomplete="off">
+                        <div id="suggestionsB" class="suggestions"></div>
+                    </div>
+                    <div id="phoneB-details" class="phone-details"></div>
+                </div>
+            </div>
+
+            <!-- Comparison Results -->
+            <div id="comparison-results" class="comparison-results" style="display: none;">
+                <h2>📊 Comparison Results</h2>
+                <div id="comparison-table"></div>
+                <div id="verdict" class="verdict"></div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading phone data...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div id="error" class="error" style="display: none;"></div>
+        </main>
+
+        <footer>
+            <p>Data fetched from Wikipedia API • MIT Licensed</p>
+            <p>⚠️ This is a beta version. Data accuracy depends on Wikipedia content.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
