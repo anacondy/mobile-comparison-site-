@@ -61,13 +61,28 @@ This document outlines the security measures implemented in the Mobile Compariso
 - [x] No external dependencies to audit
 - [x] Error messages don't leak system information
 
-## Potential Improvements
+## Enhanced Security Measures (2025)
+
+### Recently Implemented:
+1. ✅ **Referrer Policy**: `no-referrer` policy added to protect user privacy
+2. ✅ **Permissions Policy**: Restricts unused browser features (camera, microphone, geolocation)
+3. ✅ **X-Content-Type-Options**: Prevents MIME type sniffing attacks
+4. ✅ **X-Frame-Options**: Prevents clickjacking by blocking iframe embedding
+5. ✅ **Strict Transport Security**: Forces HTTPS connections (via GitHub Pages)
+
+### Additional Security Layers:
+- **Input Length Validation**: Maximum query length enforced
+- **JSON Schema Validation**: API responses validated against expected structure
+- **Timeout Protection**: API calls have reasonable timeouts to prevent hanging
+- **Error Boundary**: Graceful error handling without information leakage
+
+## Potential Future Improvements
 
 ### Future Security Enhancements:
 1. **Subresource Integrity (SRI)**: If CDN resources are added in the future
-2. **Rate Limiting**: Add client-side rate limiting for API calls
-3. **Referrer Policy**: Add restrictive referrer policy
-4. **Permissions Policy**: Add permissions policy for unused browser features
+2. **Content Security Policy Level 3**: Upgrade to CSP3 with stricter nonce-based policies
+3. **Certificate Transparency**: Monitor SSL certificate issuance
+4. **Security.txt**: Add /.well-known/security.txt for vulnerability disclosure
 
 ## Security Contact
 
