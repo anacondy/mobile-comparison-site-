@@ -37,20 +37,46 @@ function showError(message) {
 // Wikipedia API: Search for phones
 async function searchPhones(query) {
     try {
+        // Security: Validate and sanitize input
+        if (typeof query !== 'string') {
+            throw new Error('Invalid query type');
+        }
+        
+        // Security: Limit query length to prevent abuse
+        const sanitizedQuery = query.trim().substring(0, 100);
+        
+        if (sanitizedQuery.length < 2) {
+            return [];
+        }
+        
         const params = new URLSearchParams({
             action: 'opensearch',
-            search: query,
+            search: sanitizedQuery,
             limit: 6,
             namespace: 0,
             format: 'json',
             origin: '*'
         });
 
-        const response = await fetch(`${WIKI_API}?${params}`);
+        // Security: Add timeout to prevent hanging requests
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+        const response = await fetch(`${WIKI_API}?${params}`, {
+            signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        
         if (!response.ok) throw new Error('Failed to fetch suggestions');
         
         const data = await response.json();
-        return data[1].map(title => ({ title }));
+        
+        // Security: Validate response structure
+        if (!Array.isArray(data) || !Array.isArray(data[1])) {
+            throw new Error('Invalid API response structure');
+        }
+        
+        return data[1].map(title => ({ title: sanitizeHTML(String(title)) }));
     } catch (error) {
         console.error('Search error:', error);
         return [];
@@ -60,22 +86,45 @@ async function searchPhones(query) {
 // Wikipedia API: Fetch phone data by title
 async function fetchPhoneData(title) {
     try {
+        // Security: Validate input
+        if (typeof title !== 'string' || title.trim().length === 0) {
+            throw new Error('Invalid title');
+        }
+        
+        const sanitizedTitle = title.trim().substring(0, 200);
+        
         const params = new URLSearchParams({
             action: 'parse',
-            page: title,
+            page: sanitizedTitle,
             format: 'json',
             origin: '*',
             prop: 'text'
         });
 
-        const response = await fetch(`${WIKI_API}?${params}`);
+        // Security: Add timeout to prevent hanging requests
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+        const response = await fetch(`${WIKI_API}?${params}`, {
+            signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        
         if (!response.ok) throw new Error('Failed to fetch phone data');
         
         const data = await response.json();
-        if (data.error) throw new Error(data.error.info);
+        
+        // Security: Validate response structure
+        if (data.error) {
+            throw new Error(sanitizeHTML(data.error.info || 'Unknown error'));
+        }
+        
+        if (!data.parse || !data.parse.text || !data.parse.text['*']) {
+            throw new Error('Invalid API response structure');
+        }
         
         const html = data.parse.text['*'];
-        return parsePhoneData(html, title);
+        return parsePhoneData(html, sanitizedTitle);
     } catch (error) {
         console.error('Fetch error:', error);
         throw error;

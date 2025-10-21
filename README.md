@@ -4,6 +4,16 @@ A modern, secure web application for comparing smartphones side-by-side with rea
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](https://anacondy.github.io/mobile-comparison-site-/)
+[![Security](https://img.shields.io/badge/security-A+-green.svg)](SECURITY.md)
+
+## 📸 Screenshots
+
+### Homepage
+![Mobile Comparison Site Homepage](assets/screenshots/homepage.png)
+*Clean, modern interface ready for phone comparison*
+
+### Live Demo
+**[Try it now →](https://anacondy.github.io/mobile-comparison-site-/)**
 
 ## ✨ Features
 
@@ -47,6 +57,14 @@ Visit: [https://anacondy.github.io/mobile-comparison-site-/](https://anacondy.gi
 3. **Compare**: Once both phones are selected, the comparison table appears automatically
 4. **Analyze**: Review the side-by-side comparison and verdict
 
+**Need detailed help?** Check out our comprehensive **[📚 Wiki](wiki/Home.md)** for:
+- [Getting Started Guide](wiki/Getting-Started.md)
+- [Detailed Usage Instructions](wiki/How-to-Use.md)
+- [FAQ](wiki/FAQ.md)
+- [Troubleshooting](wiki/Troubleshooting.md)
+- [Architecture Guide](wiki/Architecture.md)
+- [Security Guide](wiki/Security-Guide.md)
+
 ## 🏗️ Architecture
 
 ### Technology Stack
@@ -78,14 +96,26 @@ mobile-comparison-site-/
 
 This project implements multiple security best practices:
 
-- ✅ **Content Security Policy**: Restricts resource loading
+- ✅ **Content Security Policy**: Restricts resource loading to prevent XSS
 - ✅ **XSS Prevention**: Input sanitization and safe DOM manipulation
 - ✅ **HTTPS Only**: All resources loaded over secure connections
 - ✅ **No Dependencies**: Zero npm packages = zero supply chain vulnerabilities
 - ✅ **No Data Storage**: No cookies, localStorage, or tracking
-- ✅ **Safe API Usage**: Read-only Wikipedia API access
+- ✅ **Safe API Usage**: Read-only Wikipedia API access with timeouts
+- ✅ **Input Validation**: Query length limits and type checking
+- ✅ **Referrer Policy**: No-referrer policy for privacy protection
+- ✅ **Permissions Policy**: Restricts camera, microphone, and geolocation
+- ✅ **X-Frame-Options**: Prevents clickjacking attacks
+- ✅ **Request Timeouts**: All API calls have timeout protection
 
-For detailed security information, see [SECURITY.md](SECURITY.md)
+### Security Headers Implemented:
+- `Content-Security-Policy`: Controls resource loading
+- `X-Content-Type-Options: nosniff`: Prevents MIME type sniffing
+- `X-Frame-Options: DENY`: Blocks iframe embedding
+- `Referrer-Policy: no-referrer`: Protects user privacy
+- `Permissions-Policy`: Disables unused browser features
+
+For detailed security information, see [SECURITY.md](SECURITY.md) and [Security Guide](wiki/Security-Guide.md)
 
 ## 🤝 Contributing
 
